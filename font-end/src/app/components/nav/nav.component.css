@@ -1,0 +1,33 @@
+.menu-button {
+    margin: 0.8rem 0 0 0.8rem;
+    border-radius: 50%;
+    height: 48px;
+    min-width: auto;
+    padding-left: 15px;
+}
+#container-close-menu {
+    text-align: right;
+    margin: 0.2rem 0.2rem 0 0;
+
+    .close-menu {
+        color: #acacac;
+    }
+}
+
+.container {
+    height: 100%;
+}
+
+.sidenav {
+    width: 13rem;
+    color: #fff;
+    background: linear-gradient(to top, #E8F3F8 0%, #daecf3 100%);
+}
+img {
+    display: flex;
+    margin: 0 auto 1rem auto;
+    width: 50%;
+}
+.sidenav i {
+    margin-right: 0.6rem;
+}

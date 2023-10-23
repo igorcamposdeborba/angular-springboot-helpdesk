@@ -1,0 +1,20 @@
+
+
+  <mat-drawer-container class="container">
+    <mat-drawer #drawer class="sidenav">
+      <!-- Conteúdo do Drawer -->
+      <div id="container-close-menu"> <mat-icon (click)="drawer.close()" class="close-menu">close</mat-icon> </div>
+      <img src="assets/img/side-image.svg" alt="logo no menu">
+      <mat-nav-list class="nav-list">
+        <a mat-list-item routerLink="/"> <i class="material-icons">home</i> Home </a>
+        <a mat-list-item routerLink="/"> <i class="material-icons">account_circle</i> Técnicos </a>
+        <a mat-list-item routerLink="/"> <i class="material-icons">person</i> Clientes </a>
+        <a mat-list-item routerLink="/"> <i class="material-icons">code</i> GitHub </a>
+        <a mat-list-item routerLink="/"> <i class="material-icons">logout</i> Logout </a>
+    </mat-nav-list>
+    </mat-drawer>
+    <mat-drawer-content>
+        <button class="mat-elevation-z4 menu-button" mat-button (click)="drawer.open()"><mat-icon>menu</mat-icon></button>
+      <!-- Conteúdo principal -->
+    </mat-drawer-content>
+  </mat-drawer-container>
