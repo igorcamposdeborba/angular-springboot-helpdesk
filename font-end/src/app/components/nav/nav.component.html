@@ -16,8 +16,8 @@
     <mat-drawer-content>
       <div>
         <div id="top-screen">
-          <app-header></app-header>
           <button class="mat-elevation-z4 menu-button" mat-button (click)="drawer.open()"><mat-icon>menu</mat-icon></button>
+          <app-header class="full-width" onclick="location.reload()"></app-header>
         </div>
         <!-- Conteúdo principal -->
       <router-outlet> </router-outlet> <!-- Rotas entre páginas para renderizar components de acordo com o path da url -->

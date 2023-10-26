@@ -1,5 +1,5 @@
 .menu-button {
-    margin: 0.8rem 0 0 0.8rem;
+    margin: 1.5rem 0 0 0.8rem;
     border-radius: 50%;
     height: 48px;
     min-width: auto;
@@ -8,6 +8,10 @@
 #top-screen {
     display: flex;
     align-items: flex-start;
+
+}
+.full-width {
+    width: 100%;
 }
 #container-close-menu {
     text-align: right;
@@ -15,6 +19,10 @@
 
     .close-menu {
         color: #acacac;
+    }
+    .close-menu:hover {
+        cursor: pointer;
+        color: #999999;
     }
 }
 
