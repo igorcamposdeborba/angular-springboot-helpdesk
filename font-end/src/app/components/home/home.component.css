@@ -1,0 +1,11 @@
+.card {
+    width: 90%;
+    margin: 1rem auto;
+    background-color: rgb(232, 232, 232);
+    box-shadow: 0 3px 5px hsl(0, 0%, 73%);
+}
+
+img {
+    max-height: 20rem;
+    object-fit: contain;
+}

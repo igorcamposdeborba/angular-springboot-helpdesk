@@ -5,6 +5,10 @@
     min-width: auto;
     padding-left: 15px;
 }
+#top-screen {
+    display: flex;
+    align-items: flex-start;
+}
 #container-close-menu {
     text-align: right;
     margin: 0.2rem 0.2rem 0 0;
