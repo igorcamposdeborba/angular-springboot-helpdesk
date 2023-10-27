@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRouteSnapshot } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { HeaderComponent } from '../header/header.component';
 
 
 @Component({
@@ -9,9 +11,31 @@ import { Router } from '@angular/router';
 })
 export class NavComponent {
 
-  constructor(private router : Router) {}
+  constructor(private router : Router, private titleService: Title) {
+  }
 
   ngOnInit() : void {
-    this.router.navigate(['home']);
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd){
+        const pageTitle = this.getTitleFromRoute(this.router.routerState.snapshot.root);
+        this.titleService.setTitle(pageTitle);
+      }
+    });
+
+    //this.router.navigate([this.currentRoute]);
   }
+
+  public getTitleFromRoute (route : ActivatedRouteSnapshot) : string {
+    let pageTitle = "";
+    while (route.firstChild) {
+      route = route.firstChild;
+      const routeData = route.data;
+      if (routeData && route.data["title"]) {
+        pageTitle = route.data["title"];
+      }
+    }
+    return pageTitle;
+  }
+
+  
 }
