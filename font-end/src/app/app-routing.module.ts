@@ -9,6 +9,12 @@ const routes: Routes = [
     path: "",
     component: NavComponent, children: [
       {
+        path: "",
+        pathMatch: "full",
+        data: { title: "Página inicial" },
+        component: HomeComponent
+      },
+      {
         path: "home",
         data: { title: "Página inicial" },
         component: HomeComponent
