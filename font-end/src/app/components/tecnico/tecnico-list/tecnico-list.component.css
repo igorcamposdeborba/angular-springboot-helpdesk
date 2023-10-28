@@ -11,3 +11,20 @@ table {
     float: right;
     margin: 20px 0 0 1rem;
 }
+
+@media only screen and (max-width: 600px) {
+    .responsive-table {
+        overflow-x: auto;
+    }
+
+    .group-buttons-header {
+        float: none;
+        width: 90%;
+        margin: 1rem auto 1rem 1rem;
+    }
+    mat-form-field {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

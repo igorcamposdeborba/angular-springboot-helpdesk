@@ -5,8 +5,11 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Para trabalhar com formulários no Angular 12
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+
 // Para realizar requisições HTTP
 import { HttpClientModule } from '@angular/common/http';
+// Para notificações
+import { ToastrModule } from 'ngx-toastr';
 // Imports para componentes do Angular Material
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -28,6 +31,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { HomeComponent } from './components/home/home.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TecnicoListComponent } from './components/tecnico/tecnico-list/tecnico-list.component';
+import { TecnicoCreateComponent } from './components/tecnico/tecnico-create/tecnico-create.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +39,8 @@ import { TecnicoListComponent } from './components/tecnico/tecnico-list/tecnico-
     NavComponent,
     HomeComponent,
     HeaderComponent,
-    TecnicoListComponent
+    TecnicoListComponent,
+    TecnicoCreateComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +51,8 @@ import { TecnicoListComponent } from './components/tecnico/tecnico-list/tecnico-
     ReactiveFormsModule,
     // Requisições http
     HttpClientModule,
+    // Notificações
+    ToastrModule.forRoot(),
     // Angular Material
     MatFormFieldModule,
     MatPaginatorModule,
@@ -60,7 +67,7 @@ import { TecnicoListComponent } from './components/tecnico/tecnico-list/tecnico-
     MatTableModule,
     MatIconModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

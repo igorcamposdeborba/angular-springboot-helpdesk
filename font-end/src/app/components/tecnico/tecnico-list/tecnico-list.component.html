@@ -1,40 +1,40 @@
 <div id="center-table">
+    <button routerLink="create" mat-stroked-button color="primary" class="group-buttons-header">Novo técnico</button>
     <mat-form-field>
         <mat-label>Filtro</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Igor" #input>
     </mat-form-field>
 
-    <button mat-stroked-button color="primary" class="group-buttons-header">Novo técnico</button>
 
-    <div class="mat-elevation-z3">
+    <div class="mat-elevation-z3 responsive-table" >
         <table mat-table [dataSource]="dataSource">
     
         <!-- Position Column -->
         <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <th mat-header-cell *matHeaderCellDef class="mobile-label"> ID </th>
             <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
     
         <!-- Name Column -->
         <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Nome </th>
+            <th mat-header-cell *matHeaderCellDef class="mobile-label"> Nome </th>
             <td mat-cell *matCellDef="let element"> {{element.nome}} </td>
         </ng-container>
     
         <!-- Weight Column -->
         <ng-container matColumnDef="cpf">
-            <th mat-header-cell *matHeaderCellDef> CPF </th>
+            <th mat-header-cell *matHeaderCellDef class="mobile-label"> CPF </th>
             <td mat-cell *matCellDef="let element"> {{element.cpf}} </td>
         </ng-container>
     
         <!-- Symbol Column -->
         <ng-container matColumnDef="email">
-            <th mat-header-cell *matHeaderCellDef> E-mail </th>
+            <th mat-header-cell *matHeaderCellDef class="mobile-label"> E-mail </th>
             <td mat-cell *matCellDef="let element"> {{element.email}} </td>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> Ações </th>
+            <th mat-header-cell *matHeaderCellDef class="mobile-label"> Ações </th>
             <td mat-cell *matCellDef="let element"> Ações </td>
         </ng-container>
     
@@ -43,8 +43,9 @@
         </table>
     
         <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                       [pageSize]="10" 
                     showFirstLastButtons
-                    aria-label="Select page of periodic elements">
+                    aria-label="Tabela de técnicos">
         </mat-paginator>
     </div>
   </div>
