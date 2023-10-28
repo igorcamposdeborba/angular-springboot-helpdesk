@@ -1,4 +1,11 @@
 <div id="center-table">
+    <mat-form-field>
+        <mat-label>Filtro</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Igor" #input>
+    </mat-form-field>
+
+    <button mat-stroked-button color="primary" class="group-buttons-header">Novo técnico</button>
+
     <div class="mat-elevation-z3">
         <table mat-table [dataSource]="dataSource">
     

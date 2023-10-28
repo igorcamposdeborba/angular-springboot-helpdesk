@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatPaginator } from '@angular/material/paginator';
+import {MatTableDataSource } from '@angular/material/table';
 import { Tecnico } from '../Tecnico';
 import { TecnicoService } from 'src/app/model/services/tecnico/tecnico.service';
 
@@ -11,7 +11,7 @@ import { TecnicoService } from 'src/app/model/services/tecnico/tecnico.service';
   styleUrls: ['./tecnico-list.component.css'],
 })
 
-export class TecnicoListComponent implements AfterViewInit {
+export class TecnicoListComponent {
   ELEMENT_DATA: Tecnico[] = [];
   /*ELEMENT_DATA: Tecnico[] = [
     {
@@ -29,7 +29,7 @@ export class TecnicoListComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<Tecnico>(this.ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
+  
   constructor(private tecnicoService : TecnicoService){
   }
 
@@ -37,14 +37,16 @@ export class TecnicoListComponent implements AfterViewInit {
     this.findAll();
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
-
   findAll(){
     this.tecnicoService.findAll().subscribe(response => {
-      this.ELEMENT_DATA = response;
-      this.dataSource = new MatTableDataSource<Tecnico>(this.ELEMENT_DATA);
+      this.ELEMENT_DATA = response; // salvar entity do banco de dados
+      this.dataSource = new MatTableDataSource<Tecnico>(this.ELEMENT_DATA); // aplicar na table do html 
+      this.dataSource.paginator = this.paginator; // aplicar paginação do table do html
     });
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

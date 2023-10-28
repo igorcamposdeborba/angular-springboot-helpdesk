@@ -6,3 +6,8 @@ table {
     width: 95%;
     margin: auto;
 }
+
+.group-buttons-header {
+    float: right;
+    margin: 20px 0 0 1rem;
+}
