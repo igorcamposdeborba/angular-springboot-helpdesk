@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { TecnicoService } from 'src/app/model/services/tecnico/tecnico.service';
 import { Tecnico } from '../Tecnico';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tecnico-create',
@@ -27,15 +28,24 @@ export class TecnicoCreateComponent {
     dataCriacao: ""
   }
 
-  constructor(private serviceTecnico : TecnicoService, private _snackBar: MatSnackBar){}
+  response : string = "";
+
+  constructor(private serviceTecnico : TecnicoService, private notification : MatSnackBar, private router : Router){}
 
   create(): void {
+    this.tecnico.dataCriacao = String.apply(Date.now());
     this.serviceTecnico.create(this.tecnico).subscribe(response => {
       console.log(response);
-        this._snackBar.open(String.apply(response));
-
+      this.notification.open("Enviado", "", { duration: 3000 });
+      this.router.navigate(["tecnicos"]);
     }, exception => {
-      this._snackBar.open(String.apply(exception.error.errors));
+      if(exception.error.errors){
+        exception.error.errors.forEach(element => {
+          this.notification.open("Erro" + String.apply(element.message), "", { duration: 4000 });
+        });
+      } else {
+        this.notification.open("Erro: " + exception.error.message, "", { duration: 4000 });
+      }
     })
   }
 

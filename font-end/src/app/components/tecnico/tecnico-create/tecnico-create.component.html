@@ -19,7 +19,7 @@
             <mat-form-field class="full-width">
                 <mat-label>CPF</mat-label>
                 <input matInput placeholder="Exemplo: 12345678910" [formControl]="cpf" required
-                type="text" [(ngModel)]="formattedCpf" (input)="formatCpf($event)"maxlength="14"
+                type="text" [(ngModel)]="formattedCpf" (input)="formatCpf($event)" maxlength="14"
                 [(ngModel)]="tecnico.cpf" name="cpf">
             </mat-form-field>
 
@@ -40,15 +40,3 @@
         </form>
     </div>
 </div>
-
-<mat-form-field>
-    <mat-label>Message</mat-label>
-    <input matInput value="Disco party!" #message>
-  </mat-form-field>
-  
-  <mat-form-field>
-    <mat-label>Action</mat-label>
-    <input matInput value="Dance" #action>
-  </mat-form-field>
-  
-<button mat-stroked-button (click)="openSnackBar(message.value, action.value)">Show snack-bar</button>
