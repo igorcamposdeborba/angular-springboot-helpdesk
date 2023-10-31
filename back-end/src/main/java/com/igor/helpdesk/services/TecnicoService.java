@@ -44,12 +44,7 @@ public class TecnicoService {
 		
 		Tecnico newobj = new Tecnico(objDTO);
 
-		try {
-			return repository.save(newobj);
-			
-		} catch (UnexpectedTypeException e) {
-			throw new UnexpectedTypeException(e.getMessage());
-		}
+		return repository.save(newobj);
 	}
 	
 	private void validaPorCpfEEmail(TecnicoDTO objDTO) {
