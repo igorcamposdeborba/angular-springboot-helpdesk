@@ -27,6 +27,9 @@ export class TecnicoCreateComponent {
   }
 
   response : string = "";
+  selectedTecnico : boolean = true;
+  selectedAdmin : boolean = false;
+  selectedClient : boolean = false;
 
   constructor(private serviceTecnico : TecnicoService, private notification : MatSnackBar, private router : Router){}
 
@@ -47,20 +50,50 @@ export class TecnicoCreateComponent {
     })
   }
 
+  ngOnChanges() {
+    this.validateFields();
+  }
+
   validateFields() : boolean {
     return this.nome.valid && 
            this.cpf.valid && 
            this.email.valid && 
-           this.senha.valid;
+           this.senha.valid &&
+           (this.selectedAdmin || this.selectedTecnico || this.selectedClient);
+  }
+
+  validateRoles() : boolean {
+    return this.selectedTecnico === false && this.selectedAdmin === false && this.selectedClient === false;
   }
 
   addProfile(profile : any): void {
+    if (profile === 0) {
+      this.selectedAdmin = !this.selectedAdmin;
+    } else if (profile === 2) {
+      this.selectedTecnico = !this.selectedTecnico;
+    } else if (profile === 1) {
+      this.selectedClient = !this.selectedClient;
+    }
+
     if(this.tecnico.perfis.includes(profile)){
       this.tecnico.perfis.splice(this.tecnico.perfis.indexOf(profile), 1);
+
     } else {
       this.tecnico.perfis.push(profile);
     }
+  }
 
+  formatarCPF() {
+    // Remove todos os caracteres não numéricos do CPF
+    let cpf = this.tecnico.cpf.replace(/\D/g, '');
+
+    // Aplica a formatação do CPF (XXX.XXX.XXX-XX)
+    if (cpf.length === 11) {
+      cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+      this.tecnico.cpf = cpf;
+    } else {
+      this.tecnico.cpf = cpf;
+    }
   }
   
 }

@@ -5,9 +5,9 @@
             <h1 class="full-width ">Adicionar Técnico</h1>
             
             <section id="checkbox-container">
-                <mat-checkbox class="checkbox" color="primary" (click)="addProfile(0)">Administrador</mat-checkbox>
-                <mat-checkbox class="checkbox" color="primary" (click)="addProfile(2)">Técnico</mat-checkbox>
-                <mat-checkbox class="checkbox" color="primary" (click)="addProfile(1)">Cliente</mat-checkbox>
+                <mat-checkbox class="checkbox" color="primary" (click)="addProfile(0)" (change)="validateFields()">Administrador</mat-checkbox>
+                <mat-checkbox class="checkbox" color="primary" (click)="addProfile(2)" [checked]="selectedTecnico" (change)="validateFields()">Técnico</mat-checkbox>
+                <mat-checkbox class="checkbox" color="primary" (click)="addProfile(1)" (change)="validateFields()">Cliente</mat-checkbox>
             </section>
 
             <mat-form-field class="full-width">
@@ -19,8 +19,7 @@
             <mat-form-field class="full-width">
                 <mat-label>CPF</mat-label>
                 <input matInput placeholder="Exemplo: 12345678910" [formControl]="cpf" required
-                type="text" maxlength="14"
-                [(ngModel)]="tecnico.cpf" name="cpf">
+                type="text" maxlength="14" [(ngModel)]="tecnico.cpf" name="cpf" (input)="formatarCPF()">
             </mat-form-field>
 
             <mat-form-field class="full-width">
