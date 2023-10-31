@@ -2,6 +2,8 @@ package com.igor.helpdesk.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +43,8 @@ public class TecnicoService {
 		
 		validaPorCpfEEmail(objDTO);
 		
+		formataCpf(objDTO);
+		
 		Tecnico newobj = new Tecnico(objDTO);
 		return repository.save(newobj);
 	}
@@ -57,6 +61,13 @@ public class TecnicoService {
 		if(obj.isPresent() && obj.get().getId() != objDTO.getId()) {
 			throw new DataIntegrityViolationException("E-mail já cadastrado no sistema");
 		}
+	}
+	
+	private void formataCpf(TecnicoDTO objDto){
+		String cpf = objDto.getCpf().replaceAll("[^0-9]", "");
+
+		String cpfFormatted = cpf.replaceAll("(\\d{3})(\\d{3})(\\d{3})(\\d{2})", "$1.$2.$3-$4");
+        objDto.setCpf(cpfFormatted);
 	}
 
 

@@ -1,8 +1,10 @@
 package com.igor.helpdesk.domain;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -36,7 +38,7 @@ public class Tecnico extends Pessoa implements Serializable {
 		this.email = obj.getEmail();
 		this.cpf = obj.getCpf();
 		this.senha = obj.getSenha();
-		this.dataCriacao = obj.getDataCriacao();
+		this.dataCriacao = Objects.isNull(obj.getDataCriacao()) ? LocalDate.now() : obj.getDataCriacao();
 		this.perfis = obj.getPerfis().stream().map( i -> i.getCodigo()).collect(Collectors.toSet()); // retornar apenas o id do perfil (id da role)
 	}
 

@@ -16,8 +16,6 @@ export class TecnicoCreateComponent {
   email: FormControl =    new FormControl(null, Validators.email);
   senha: FormControl = new FormControl(null, Validators.minLength(6));
 
-  formattedCpf: string = '';
-
   tecnico : Tecnico = {
     id: "",
     nome: "",
@@ -35,7 +33,7 @@ export class TecnicoCreateComponent {
   create(): void {
     this.tecnico.dataCriacao = String.apply(Date.now());
     this.serviceTecnico.create(this.tecnico).subscribe(response => {
-      console.log(response);
+
       this.notification.open("Enviado", "", { duration: 3000 });
       this.router.navigate(["tecnicos"]);
     }, exception => {
@@ -54,18 +52,6 @@ export class TecnicoCreateComponent {
            this.cpf.valid && 
            this.email.valid && 
            this.senha.valid;
-  }
-
-  formatCpf(event: any) {
-    let cpf = event.target.value.replace(/\D/g, ''); // Remove todos os caracteres não numéricos
-    if (cpf.length > 3) {
-      cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
-    } else if (cpf.length > 6) {
-      cpf = cpf.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
-    } else if (cpf.length > 3) {
-      cpf = cpf.replace(/(\d{3})(\d{1,3})/, '$1.$2');
-    }
-    this.formattedCpf = cpf;
   }
 
   addProfile(profile : any): void {
