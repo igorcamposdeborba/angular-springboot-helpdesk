@@ -2,12 +2,8 @@ package com.igor.helpdesk.services;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.igor.helpdesk.domain.Pessoa;
 import com.igor.helpdesk.domain.Tecnico;
 import com.igor.helpdesk.domain.dtos.TecnicoDTO;
@@ -15,6 +11,7 @@ import com.igor.helpdesk.repositories.PessoaRepository;
 import com.igor.helpdesk.repositories.TecnicoRepository;
 import com.igor.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.igor.helpdesk.services.exceptions.ObjectNotFoundException;
+import com.igor.helpdesk.services.exceptions.UnexpectedTypeException;
 
 import jakarta.validation.Valid;
 
@@ -46,7 +43,13 @@ public class TecnicoService {
 		formataCpf(objDTO);
 		
 		Tecnico newobj = new Tecnico(objDTO);
-		return repository.save(newobj);
+
+		try {
+			return repository.save(newobj);
+			
+		} catch (UnexpectedTypeException e) {
+			throw new UnexpectedTypeException(e.getMessage());
+		}
 	}
 	
 	private void validaPorCpfEEmail(TecnicoDTO objDTO) {

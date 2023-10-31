@@ -10,6 +10,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.igor.helpdesk.domain.Tecnico;
 import com.igor.helpdesk.domain.enums.Perfil;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public class TecnicoDTO implements Serializable {
@@ -25,10 +28,11 @@ public class TecnicoDTO implements Serializable {
 	@NotNull (message = "Campo SENHA é obrigatório")
 	protected String senha;
 
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	protected LocalDate dataCriacao = LocalDate.now(); // LocalDate: dd/MM/yyyy  // Setar data atual automaticamente na criação do objeto
 
 	// Composition
-	@JsonFormat(pattern = "dd/MM/yyyy")
+	@NotEmpty (message = "Campo PERFIL é obrigatório")
 	protected Set<Integer> perfis = new HashSet<>();// Armazena o número do Perfil (de acesso)
 													// Set não aceita repetição, é rápido (comparado ao TreeSet e
 													// LinkedHashSet)
