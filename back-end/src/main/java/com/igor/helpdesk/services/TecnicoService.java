@@ -11,7 +11,6 @@ import com.igor.helpdesk.repositories.PessoaRepository;
 import com.igor.helpdesk.repositories.TecnicoRepository;
 import com.igor.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.igor.helpdesk.services.exceptions.ObjectNotFoundException;
-import com.igor.helpdesk.services.exceptions.UnexpectedTypeException;
 
 import jakarta.validation.Valid;
 

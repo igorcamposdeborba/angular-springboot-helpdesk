@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TecnicoService } from 'src/app/model/services/tecnico/tecnico.service';
 import { Tecnico } from '../Tecnico';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-tecnico-create',
-  templateUrl: './tecnico-create.component.html',
-  styleUrls: ['./tecnico-create.component.css']
+  selector: 'app-tecnico-update',
+  templateUrl: './tecnico-update.component.html',
+  styleUrls: ['./tecnico-update.component.css']
 })
-export class TecnicoCreateComponent {
+export class TecnicoUpdateComponent {
   nome: FormControl =     new FormControl(null, Validators.minLength(2));
   cpf: FormControl =      new FormControl(null, Validators.minLength(11));
   email: FormControl =    new FormControl(null, Validators.email);
@@ -30,13 +30,25 @@ export class TecnicoCreateComponent {
   selectedTecnico : boolean = true;
   selectedAdmin : boolean = false;
 
-  constructor(private serviceTecnico : TecnicoService, private notification : MatSnackBar, private router : Router){}
+  constructor(private serviceTecnico : TecnicoService, private notification : MatSnackBar, private router : Router, 
+             private activatedRoute : ActivatedRoute){}
+             
+  ngOnChanges() {
+    this.validateFields();
+  }
+  ngOnInit(){
+    this.tecnico.id = this.activatedRoute.snapshot.paramMap.get("id"); // get do id da url e salvar em variável do formulário
+    this.findById();
+  }
 
-  create(): void {
+  update(): void {
     this.tecnico.dataCriacao = String.apply(Date.now());
-    this.serviceTecnico.create(this.tecnico).subscribe(response => {
 
-      this.notification.open("Enviado", "", { duration: 3000 });
+    this.tecnico.id = this.activatedRoute.snapshot.paramMap.get("id");
+
+    this.serviceTecnico.update(this.tecnico).subscribe(response => {
+
+      this.notification.open("Atualizado", "", { duration: 3000 });
       this.router.navigate(["tecnicos"]);
     }, exception => {
       if(exception.error.errors){
@@ -49,9 +61,27 @@ export class TecnicoCreateComponent {
     })
   }
 
-  ngOnChanges() {
-    this.validateFields();
+  findById(): void {    
+    this.serviceTecnico.findById(this.tecnico.id).subscribe( response => {
+
+        for (let i=0; i<response.perfis.length; i++){
+          if (response.perfis[i] == "CLIENTE") { // Converter para número porque back-end coloca como padrão no enum o nome do enum
+            response.perfis[i] = 1;
+          }
+          if (response.perfis[i] == "ADMIN") {
+            response.perfis[i] = 0;
+            this.selectedAdmin = true; // atualizar front-end em relação ao back-end
+          }
+          if (response.perfis[i] == "TECNICO") {
+            response.perfis[i] = 2;
+          }
+        }
+
+      this.tecnico = response;
+    });
   }
+  
+
 
   validateFields() : boolean {
     return this.nome.valid && 
@@ -92,5 +122,4 @@ export class TecnicoCreateComponent {
       this.tecnico.cpf = cpf;
     }
   }
-  
 }

@@ -1,9 +1,9 @@
 export interface Tecnico {
-    id?: any,
+    id?: string,
     nome: string,
     cpf: string,
     email: string,
     senha: string,
-    perfis: string[],
+    perfis: any[],
     dataCriacao: string
 }

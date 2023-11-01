@@ -9,7 +9,14 @@ table {
 
 .group-buttons-header {
     float: right;
-    margin: 20px 0 0 1rem;
+}
+
+.edit {
+    color: #417cbc;
+}
+
+.delete {
+    color:  #ff5c5c;
 }
 
 @media only screen and (max-width: 600px) {

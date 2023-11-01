@@ -4,6 +4,7 @@ import { NavComponent } from './components/nav/nav.component';
 import { HomeComponent } from './components/home/home.component';
 import { TecnicoListComponent } from './components/tecnico/tecnico-list/tecnico-list.component';
 import { TecnicoCreateComponent } from './components/tecnico/tecnico-create/tecnico-create.component';
+import { TecnicoUpdateComponent } from './components/tecnico/tecnico-update/tecnico-update.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,11 @@ const routes: Routes = [
         path: "tecnicos/create",
         data: { title: "Técnicos" },
         component: TecnicoCreateComponent
+      },
+      {
+        path: "tecnicos/update/:id",
+        data: { title: "Técnicos" },
+        component: TecnicoUpdateComponent
       }
     ]
   }
