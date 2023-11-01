@@ -64,6 +64,7 @@ export class TecnicoUpdateComponent {
   findById(): void {    
     this.serviceTecnico.findById(this.tecnico.id).subscribe( response => {
 
+      console.log(response);
         for (let i=0; i<response.perfis.length; i++){
           if (response.perfis[i] == "CLIENTE") { // Converter para número porque back-end coloca como padrão no enum o nome do enum
             response.perfis[i] = 1;
