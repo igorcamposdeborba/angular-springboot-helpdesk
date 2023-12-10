@@ -1,0 +1,80 @@
+.container {
+    width: 35rem;
+    margin: auto;
+    padding: 1rem 1rem 3rem 1rem;
+    border-radius: .6rem;
+}
+.align-center {
+    margin-top: 1.5rem;
+}
+@media only screen and (max-width: 600px) {
+    .container {
+        width: auto;
+    }
+    .groupLabels {
+        flex-wrap: wrap;
+    }
+    .groupLabels > mat-form-field {
+        margin: 0rem !important;
+    }
+}
+@media only screen and (min-width: 600px) {
+    .align-center {
+        margin: 1.5rem 0 0 3.3rem;
+    }
+}
+.full-width {
+    width: 100%;
+}
+
+h1 {
+    text-align: center;
+}
+
+img {
+    display: flex;
+    height: 13vh;
+    margin: auto;
+}
+
+#checkbox-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    margin-bottom: 1rem;
+    place-items: center;
+}
+
+.save {
+    float: right;
+}
+
+#container-close-box {
+    text-align: right;
+    margin: 0.2rem 0.2rem 0 0;
+
+    .close-box {
+        color: #acacac;
+    }
+    .close-box:hover {
+        cursor: pointer;
+        color: #999999;
+    }
+}
+
+#description {
+    min-height: 4rem;
+    max-height: 10rem;
+}
+
+.groupLabels {
+    display: flex;
+    justify-content: space-between;
+}
+
+.groupLabels > mat-form-field {
+    margin-right: 1rem;
+}
+
+.groupLabels > mat-form-field:last-child {
+    margin-right: 0;
+}

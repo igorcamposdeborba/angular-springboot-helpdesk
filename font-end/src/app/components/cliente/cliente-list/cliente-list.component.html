@@ -1,5 +1,5 @@
 <div id="center-table">
-    <button routerLink="create" mat-stroked-button color="primary" class="group-buttons-header mat-elevation-z2">Cadastrar técnico</button>
+    <button routerLink="create" mat-stroked-button color="primary" class="group-buttons-header mat-elevation-z2">Cadastrar cliente</button>
     <mat-form-field>
         <mat-label>Filtro</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Ex.: Igor" #input>
@@ -53,7 +53,7 @@
         <mat-paginator [pageSizeOptions]="[5, 10, 20]"
                        [pageSize]="10" 
                     showFirstLastButtons
-                    aria-label="Tabela de técnicos">
+                    aria-label="Tabela de clientes">
         </mat-paginator>
     </div>
   </div>

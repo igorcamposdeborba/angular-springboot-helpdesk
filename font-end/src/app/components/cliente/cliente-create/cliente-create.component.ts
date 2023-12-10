@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { TecnicoService } from 'src/app/model/services/tecnico/tecnico.service';
-import { Tecnico } from '../tecnico';
+import { Cliente } from '../../cliente/cliente';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { ClienteService } from 'src/app/model/services/cliente/cliente.service';
 
 @Component({
-  selector: 'app-tecnico-create',
-  templateUrl: './tecnico-create.component.html',
-  styleUrls: ['./tecnico-create.component.css']
+  selector: 'app-cliente-create',
+  templateUrl: './cliente-create.component.html',
+  styleUrls: ['./cliente-create.component.css']
 })
-export class TecnicoCreateComponent {
+export class ClienteCreateComponent {
   nome: FormControl =     new FormControl(null, Validators.minLength(2));
   cpf: FormControl =      new FormControl(null, Validators.minLength(11));
   email: FormControl =    new FormControl(null, Validators.email);
   senha: FormControl = new FormControl(null, Validators.minLength(6));
 
-  tecnico : Tecnico = {
+  cliente : Cliente = {
     id: "",
     nome: "",
     cpf: "",
@@ -27,17 +27,18 @@ export class TecnicoCreateComponent {
   }
 
   response : string = "";
-  selectedTecnico : boolean = true;
+  selectedCliente : boolean = true;
   selectedAdmin : boolean = false;
+  selectedTecnico : boolean = false;
 
-  constructor(private serviceTecnico : TecnicoService, private notification : MatSnackBar, private router : Router){}
+  constructor(private serviceCliente : ClienteService, private notification : MatSnackBar, private router : Router){}
 
   create(): void {
-    this.tecnico.dataCriacao = String.apply(Date.now());
-    this.serviceTecnico.create(this.tecnico).subscribe(response => {
+    this.cliente.dataCriacao = String.apply(Date.now());
+    this.serviceCliente.create(this.cliente).subscribe(response => {
 
       this.notification.open("Enviado", "", { duration: 3000 });
-      this.router.navigate(["tecnicos"]);
+      this.router.navigate(["clientes"]);
     }, exception => {
       if(exception.error.errors){
         exception.error.errors.forEach(element => {
@@ -58,11 +59,11 @@ export class TecnicoCreateComponent {
            this.cpf.valid && 
            this.email.valid && 
            this.senha.valid &&
-           (this.selectedAdmin || this.selectedTecnico);
+           (this.selectedAdmin || this.selectedCliente || this.selectedTecnico);
   }
 
   validateRoles() : boolean {
-    return this.selectedTecnico === false && this.selectedAdmin === false;
+    return this.selectedCliente === false && this.selectedAdmin === false && this.selectedTecnico;
   }
 
   addProfile(profile : any): void {
@@ -72,25 +73,24 @@ export class TecnicoCreateComponent {
       this.selectedTecnico = !this.selectedTecnico;
     }
 
-    if(this.tecnico.perfis.includes(profile)){
-      this.tecnico.perfis.splice(this.tecnico.perfis.indexOf(profile), 1);
+    if(this.cliente.perfis.includes(profile)){
+      this.cliente.perfis.splice(this.cliente.perfis.indexOf(profile), 1);
 
     } else {
-      this.tecnico.perfis.push(profile);
+      this.cliente.perfis.push(profile);
     }
   }
 
   formatarCPF() {
     // Remove todos os caracteres não numéricos do CPF
-    let cpf = this.tecnico.cpf.replace(/\D/g, '');
+    let cpf = this.cliente.cpf.replace(/\D/g, '');
 
     // Aplica a formatação do CPF (XXX.XXX.XXX-XX)
     if (cpf.length === 11) {
       cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-      this.tecnico.cpf = cpf;
+      this.cliente.cpf = cpf;
     } else {
-      this.tecnico.cpf = cpf;
+      this.cliente.cpf = cpf;
     }
   }
-  
 }

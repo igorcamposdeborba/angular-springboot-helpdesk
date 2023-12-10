@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Tecnico } from 'src/app/components/tecnico/Tecnico';
+import { Tecnico } from 'src/app/components/tecnico/tecnico';
 import { API_CONFIG } from 'src/app/config/api.config';
 
 @Injectable({
@@ -26,6 +26,10 @@ export class TecnicoService {
 
   update(tecnico : Tecnico): Observable<Tecnico> {
     return this.httpClient.put<Tecnico>(`${API_CONFIG.baseUrl}/tecnicos/${tecnico.id}`, tecnico);
+  }
+
+  delete(id : string): Observable<Tecnico> {
+    return this.httpClient.delete<Tecnico>(`${API_CONFIG.baseUrl}/tecnicos/${id}`);
   }
 
 }

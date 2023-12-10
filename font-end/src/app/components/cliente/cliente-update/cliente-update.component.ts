@@ -1,22 +1,22 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Cliente } from '../cliente';
+import { ClienteService } from 'src/app/model/services/cliente/cliente.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TecnicoService } from 'src/app/model/services/tecnico/tecnico.service';
-import { Tecnico } from '../tecnico';
 
 @Component({
-  selector: 'app-tecnico-update',
-  templateUrl: './tecnico-update.component.html',
-  styleUrls: ['./tecnico-update.component.css']
+  selector: 'app-cliente-update',
+  templateUrl: './cliente-update.component.html',
+  styleUrls: ['./cliente-update.component.css']
 })
-export class TecnicoUpdateComponent {
-  nome: FormControl =     new FormControl(null, Validators.minLength(2));
-  cpf: FormControl =      new FormControl(null, Validators.minLength(11));
-  email: FormControl =    new FormControl(null, Validators.email);
+export class ClienteUpdateComponent {
+  nome: FormControl =  new FormControl(null, Validators.minLength(2));
+  cpf: FormControl =   new FormControl(null, Validators.minLength(11));
+  email: FormControl = new FormControl(null, Validators.email);
   senha: FormControl = new FormControl(null, Validators.minLength(6));
 
-  tecnico : Tecnico = {
+  cliente : Cliente = {
     id: "",
     nome: "",
     cpf: "",
@@ -27,29 +27,29 @@ export class TecnicoUpdateComponent {
   }
 
   response : string = "";
-  selectedTecnico : boolean = true;
+  selectedTecnico : boolean = false;
   selectedAdmin : boolean = false;
 
-  constructor(private serviceTecnico : TecnicoService, private notification : MatSnackBar, private router : Router, 
+  constructor(private serviceCliente : ClienteService, private notification : MatSnackBar, private router : Router, 
              private activatedRoute : ActivatedRoute){}
-             
+ 
   ngOnChanges() {
     this.validateFields();
   }
   ngOnInit(){
-    this.tecnico.id = this.activatedRoute.snapshot.paramMap.get("id"); // get do id da url e salvar em variável do formulário
+    this.cliente.id = this.activatedRoute.snapshot.paramMap.get("id"); // get do id da url e salvar em variável do formulário
     this.findById();
   }
 
   update(): void {
-    this.tecnico.dataCriacao = String.apply(Date.now());
+    this.cliente.dataCriacao = String.apply(Date.now());
 
-    this.tecnico.id = this.activatedRoute.snapshot.paramMap.get("id");
+    this.cliente.id = this.activatedRoute.snapshot.paramMap.get("id");
 
-    this.serviceTecnico.update(this.tecnico).subscribe(response => {
+    this.serviceCliente.update(this.cliente).subscribe(response => {
 
       this.notification.open("Atualizado", "", { duration: 3000 });
-      this.router.navigate(["tecnicos"]);
+      this.router.navigate(["clientes"]);
     }, exception => {
       if(exception.error.errors){
         exception.error.errors.forEach(element => {
@@ -62,7 +62,7 @@ export class TecnicoUpdateComponent {
   }
 
   findById(): void {    
-    this.serviceTecnico.findById(this.tecnico.id).subscribe( response => {
+    this.serviceCliente.findById(this.cliente.id).subscribe( response => {
 
       console.log(response);
         for (let i=0; i<response.perfis.length; i++){
@@ -75,10 +75,11 @@ export class TecnicoUpdateComponent {
           }
           if (response.perfis[i] == "TECNICO") {
             response.perfis[i] = 2;
+            this.selectedTecnico = true; // atualizar front-end em relação ao back-end
           }
         }
 
-      this.tecnico = response;
+      this.cliente = response;
     });
   }
   
@@ -93,7 +94,7 @@ export class TecnicoUpdateComponent {
   }
 
   validateRoles() : boolean {
-    return this.selectedTecnico === false && this.selectedAdmin === false;
+    return this.selectedAdmin === false && this.selectedTecnico === false;
   }
 
   addProfile(profile : any): void {
@@ -103,24 +104,24 @@ export class TecnicoUpdateComponent {
       this.selectedTecnico = !this.selectedTecnico;
     }
 
-    if(this.tecnico.perfis.includes(profile)){
-      this.tecnico.perfis.splice(this.tecnico.perfis.indexOf(profile), 1);
+    if(this.cliente.perfis.includes(profile)){
+      this.cliente.perfis.splice(this.cliente.perfis.indexOf(profile), 1);
 
     } else {
-      this.tecnico.perfis.push(profile);
+      this.cliente.perfis.push(profile);
     }
   }
 
   formatarCPF() {
     // Remove todos os caracteres não numéricos do CPF
-    let cpf = this.tecnico.cpf.replace(/\D/g, '');
+    let cpf = this.cliente.cpf.replace(/\D/g, '');
 
     // Aplica a formatação do CPF (XXX.XXX.XXX-XX)
     if (cpf.length === 11) {
       cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-      this.tecnico.cpf = cpf;
+      this.cliente.cpf = cpf;
     } else {
-      this.tecnico.cpf = cpf;
+      this.cliente.cpf = cpf;
     }
   }
 }

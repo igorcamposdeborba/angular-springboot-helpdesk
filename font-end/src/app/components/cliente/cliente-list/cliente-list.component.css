@@ -1,0 +1,37 @@
+table {
+    width: 100%;
+    margin: 1rem 0; 
+}
+#center-table {
+    width: 95%;
+    margin: auto;
+}
+
+.group-buttons-header {
+    float: right;
+}
+
+.edit {
+    color: #417cbc;
+}
+
+.delete {
+    color:  #ff5c5c;
+}
+
+@media only screen and (max-width: 600px) {
+    .responsive-table {
+        overflow-x: auto;
+    }
+
+    .group-buttons-header {
+        float: none;
+        width: 90%;
+        margin: 1rem auto 1rem 1rem;
+    }
+    mat-form-field {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

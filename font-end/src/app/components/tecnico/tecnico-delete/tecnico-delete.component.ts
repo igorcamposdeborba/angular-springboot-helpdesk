@@ -1,20 +1,15 @@
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Tecnico } from '../tecnico';
+import { TecnicoService } from 'src/app/model/services/tecnico/tecnico.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TecnicoService } from 'src/app/model/services/tecnico/tecnico.service';
-import { Tecnico } from '../tecnico';
 
 @Component({
-  selector: 'app-tecnico-update',
-  templateUrl: './tecnico-update.component.html',
-  styleUrls: ['./tecnico-update.component.css']
+  selector: 'app-tecnico-delete',
+  templateUrl: './tecnico-delete.component.html',
+  styleUrls: ['./tecnico-delete.component.css']
 })
-export class TecnicoUpdateComponent {
-  nome: FormControl =     new FormControl(null, Validators.minLength(2));
-  cpf: FormControl =      new FormControl(null, Validators.minLength(11));
-  email: FormControl =    new FormControl(null, Validators.email);
-  senha: FormControl = new FormControl(null, Validators.minLength(6));
+export class TecnicoDeleteComponent {
 
   tecnico : Tecnico = {
     id: "",
@@ -34,21 +29,20 @@ export class TecnicoUpdateComponent {
              private activatedRoute : ActivatedRoute){}
              
   ngOnChanges() {
-    this.validateFields();
   }
   ngOnInit(){
     this.tecnico.id = this.activatedRoute.snapshot.paramMap.get("id"); // get do id da url e salvar em variável do formulário
     this.findById();
   }
 
-  update(): void {
+  delete(): void {
     this.tecnico.dataCriacao = String.apply(Date.now());
 
     this.tecnico.id = this.activatedRoute.snapshot.paramMap.get("id");
 
-    this.serviceTecnico.update(this.tecnico).subscribe(response => {
+    this.serviceTecnico.delete(this.tecnico.id).subscribe(response => {
 
-      this.notification.open("Atualizado", "", { duration: 3000 });
+      this.notification.open("Deletado", "", { duration: 3000 });
       this.router.navigate(["tecnicos"]);
     }, exception => {
       if(exception.error.errors){
@@ -80,35 +74,6 @@ export class TecnicoUpdateComponent {
 
       this.tecnico = response;
     });
-  }
-  
-
-
-  validateFields() : boolean {
-    return this.nome.valid && 
-           this.cpf.valid && 
-           this.email.valid && 
-           this.senha.valid &&
-           (this.selectedAdmin || this.selectedTecnico);
-  }
-
-  validateRoles() : boolean {
-    return this.selectedTecnico === false && this.selectedAdmin === false;
-  }
-
-  addProfile(profile : any): void {
-    if (profile === 0) {
-      this.selectedAdmin = !this.selectedAdmin;
-    } else if (profile === 2) {
-      this.selectedTecnico = !this.selectedTecnico;
-    }
-
-    if(this.tecnico.perfis.includes(profile)){
-      this.tecnico.perfis.splice(this.tecnico.perfis.indexOf(profile), 1);
-
-    } else {
-      this.tecnico.perfis.push(profile);
-    }
   }
 
   formatarCPF() {

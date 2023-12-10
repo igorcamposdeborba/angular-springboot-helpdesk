@@ -26,10 +26,4 @@ export class HeaderComponent {
       }
     });
   }
-
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (this.currentRoute != ""){
-  //     this.router.navigate([this.currentRoute]);
-  //   }
-  // }
 }
